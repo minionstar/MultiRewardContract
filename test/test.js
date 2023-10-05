@@ -108,7 +108,7 @@ describe("test mulit-reward contract", function () {
   it("test add reward", async function () {
     const rewardAmount = ethers.utils.parseUnits("1000", 6);
     const stakeAmount = ethers.utils.parseEther("10000");
-    const stakePeriod = 100; // 100s
+    const stakePeriod = 10000; // 10s
 
     // record reward token (USDC), period, distributor
 
@@ -181,8 +181,8 @@ describe("test mulit-reward contract", function () {
       stakeAmount
     );
     console.log("current timestamp: ", await time.latest());
-    await mine(10000); //10s passed
-    console.log("current timestamp: ", await time.latest());
+    await mine(100000); //100s passed
+
     console.log(
       "Total supply is : ",
       ethers.utils.formatEther(
@@ -194,7 +194,10 @@ describe("test mulit-reward contract", function () {
 
     const rewardData = await stakingContract.rewardData(USDC);
     const rewardPerTokenStored = rewardData["rewardPerTokenStored"];
-    console.log("reward per token stored: ", rewardPerTokenStored);
+    console.log(
+      "reward per token stored: ",
+      ethers.utils.formatUnits(rewardPerTokenStored, 6)
+    );
 
     const rewardRate = parseInt(rewardAmount / stakePeriod);
     let time_max = await stakingContract
@@ -214,8 +217,8 @@ describe("test mulit-reward contract", function () {
     const rpt_calc = parseInt((interval * 10 ** 18 * rewardRate) / stakeAmount);
     const rpt = await stakingContract.connect(owner).rewardPerToken(USDC);
 
-    console.log("rpt_calculate: ", rpt_calc);
-    console.log("rpt: ", rpt);
+    console.log("rpt_calculate: ", ethers.utils.formatUnits(rpt_calc, 6));
+    console.log("rpt: ", ethers.utils.formatUnits(rpt, 6));
 
     expect(rewardPerTokenStored.add(rpt_calc)).to.be.equal(rpt);
 
@@ -232,6 +235,9 @@ describe("test mulit-reward contract", function () {
     // test exit
     await stakingContract.connect(owner).exit();
     expect(await justusToken.balanceOf(stakingContract.address)).to.be.equal(0);
+
+    console.log(await usdc.balanceOf(owner.address));
+    console.log("current timestamp: ", await time.latest());
   });
 });
 

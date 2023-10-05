@@ -18,12 +18,12 @@ contract JustusStake is ReentrancyGuard, Pausable, Ownable {
     /* ========== STATE VARIABLES ========== */
 
     struct Reward {
-        address rewardsDistributor;
-        uint256 rewardsDuration;
-        uint256 periodFinish;
-        uint256 rewardRate;
-        uint256 lastUpdateTime;
-        uint256 rewardPerTokenStored;
+        address rewardsDistributor; // reward distrubutor (add reward and update reward)
+        uint256 rewardsDuration; // Duration of rewards to be paid out (in seconds)
+        uint256 periodFinish; // Timestamp of when the rewards finish
+        uint256 rewardRate; // Reward to be paid out per second
+        uint256 lastUpdateTime; // Minimum of last updated time and reward finish time
+        uint256 rewardPerTokenStored; // Sum of (reward rate * dt * 1e18 / total supply)
     }
     IERC20 public stakingToken;
     mapping(address => Reward) public rewardData;

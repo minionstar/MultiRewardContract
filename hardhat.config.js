@@ -1,5 +1,6 @@
 require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
+require("dotenv").config();
 /** @type import('hardhat/config').HardhatUserConfig */
 
 const CHAIN_IDS = {
@@ -18,7 +19,7 @@ module.exports = {
       chainId: CHAIN_IDS.hardhat,
       forking: {
         enabled: true,
-        url: "https://mainnet.infura.io/v3/beb8df2b654d4706a171126d6ffdd827", // url to RPC node, ${ALCHEMY_KEY} - must be your API key
+        url: process.env.RPC_URL, // url to RPC node, ${ALCHEMY_KEY} - must be your API key
         blockNumber: 18278904,
       },
     },
