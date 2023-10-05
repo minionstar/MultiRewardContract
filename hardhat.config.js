@@ -2,14 +2,26 @@ require("@nomiclabs/hardhat-waffle");
 require("@nomiclabs/hardhat-etherscan");
 /** @type import('hardhat/config').HardhatUserConfig */
 
+const CHAIN_IDS = {
+  hardhat: 1, // chain ID for hardhat testing
+};
+
 module.exports = {
   defaultNetwork: "hardhat",
 
   paths: {
     artifacts: "./src/artifacts",
   },
+
   networks: {
-    hardhat: {},
+    hardhat: {
+      chainId: CHAIN_IDS.hardhat,
+      forking: {
+        enabled: true,
+        url: "https://mainnet.infura.io/v3/beb8df2b654d4706a171126d6ffdd827", // url to RPC node, ${ALCHEMY_KEY} - must be your API key
+        blockNumber: 18278904,
+      },
+    },
     mumbai: {
       url: "https://polygon-mumbai.g.alchemy.com/v2/JIGtGieoV-DRZMJZtE3GiKKUlB7JIL6v",
       accounts: [

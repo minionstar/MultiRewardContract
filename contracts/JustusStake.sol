@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 import "@openzeppelin/contracts/utils/Context.sol";
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
-contract MultiRewards is ReentrancyGuard, Pausable, Ownable {
+contract JustusStake is ReentrancyGuard, Pausable, Ownable {
     using SafeMath for uint256;
     using SafeERC20 for IERC20;
 
